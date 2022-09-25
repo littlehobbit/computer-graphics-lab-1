@@ -64,7 +64,7 @@ int main(int argc, char* argv[]) {
                              sf::Style::Fullscreen);
   engine.set_fps(30);
 
-
+  srand(time(0));
   for (size_t i = 0; i < 100; i++) {
     sf::Vector2f speed(rand() % 300 - 150.0, rand() % 300 - 150.0);
 
