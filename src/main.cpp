@@ -21,7 +21,7 @@
 
 class MovableObject : public Object {
  public:
-  MovableObject(sf::Vector2f speed, double rotate_speed)
+  MovableObject(sf::Vector2f speed, float rotate_speed)
       : Object(), speed(speed), rotation_speed(rotate_speed) {}
 
   void start() override {
@@ -55,7 +55,7 @@ class MovableObject : public Object {
 
  private:
   sf::Vector2f speed;
-  double rotation_speed;
+  float rotation_speed;
 };
 
 int main(int argc, char* argv[]) {

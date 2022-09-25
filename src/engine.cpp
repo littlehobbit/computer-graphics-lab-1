@@ -74,11 +74,11 @@ void Engine::clear_screen() {
       
       auto rect = drawable->get_global_bounds();
 
-      auto size = rect.getSize();
+      auto size = sf::Vector2f{rect.width, rect.height};
       size.x += sprite_offset;
       size.y += sprite_offset;
 
-      auto pos = rect.getPosition();
+      auto pos = sf::Vector2f{rect.left, rect.top};
       pos.x -= sprite_offset / 2.0;
       pos.y -= sprite_offset / 2.0;
 

@@ -13,7 +13,7 @@
 
 struct Transform {
   sf::Vector2f position = {0, 0};
-  double rotation = 0;
+  float rotation = 0;
 };
 
 class Object {
