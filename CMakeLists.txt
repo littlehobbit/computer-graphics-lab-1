@@ -4,8 +4,6 @@ project(lab_1)
 
 add_subdirectory(libs)
 
-find_package(SFML 2.5 COMPONENTS graphics audio window system REQUIRED)
-
 add_executable(
     ${PROJECT_NAME} 
     src/main.cpp

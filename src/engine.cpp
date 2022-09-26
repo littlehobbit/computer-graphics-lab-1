@@ -35,11 +35,11 @@ void Engine::run() {
     auto delta_time = fps_clock.restart();
 
     update(delta_time);
+    check_collisions();
 
     clear_screen();
     draw();
 
-    check_collisions();
     // Framerate calc
     auto elapsed = frame_clock.getElapsedTime().asMilliseconds();
     auto sleep_time = 1000.0 / fps - elapsed;
@@ -69,9 +69,8 @@ void Engine::clear_screen() {
     auto drawable = obj->get_drawable();
 
     if (drawable) {
-      
       const auto sprite_offset = 30;
-      
+
       auto rect = drawable->get_global_bounds();
 
       auto size = sf::Vector2f{rect.width, rect.height};

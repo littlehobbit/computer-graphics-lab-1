@@ -62,7 +62,7 @@ int main(int argc, char* argv[]) {
   auto& engine = engine::global;
   engine.set_window_settings(sf::VideoMode::getDesktopMode(), "lab-1",
                              sf::Style::Fullscreen);
-  engine.set_fps(30);
+  engine.set_fps(60);
 
   srand(time(0));
   for (size_t i = 0; i < 100; i++) {
