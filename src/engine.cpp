@@ -34,8 +34,9 @@ void Engine::run() {
 
     auto delta_time = fps_clock.restart();
 
-    update(delta_time);
     check_collisions();
+
+    update(delta_time);
 
     clear_screen();
     draw();

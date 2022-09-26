@@ -32,8 +32,6 @@ class MovableObject : public Object {
       sf::Color random(rand(), rand(), rand());
       sprite->set_color(random);
 
-      rotation_speed *= -1;
-
       switch (part) {
         case TOP:
         case BOTTOM:
@@ -49,6 +47,7 @@ class MovableObject : public Object {
   }
 
   void update(const Time& delta) override {
+    this->delta = delta;
     this->transform.position += speed * delta.asSeconds();
     this->transform.rotation += rotation_speed * delta.asSeconds();
   }
@@ -56,6 +55,7 @@ class MovableObject : public Object {
  private:
   sf::Vector2f speed;
   float rotation_speed;
+  Time delta{};
 };
 
 int main(int argc, char* argv[]) {
@@ -65,34 +65,40 @@ int main(int argc, char* argv[]) {
   engine.set_fps(60);
 
   srand(time(0));
-  for (size_t i = 0; i < 100; i++) {
-    sf::Vector2f speed(rand() % 300 - 150.0, rand() % 300 - 150.0);
+  for (size_t i = 0; i < 200; i++) {
+    sf::Vector2f speed(rand() % 300 + 50.0, rand() % 300 + 50.0);
 
     double rotation_speed = rand() % 100;
 
     auto obj = engine::create_object<MovableObject>(speed, rotation_speed);
 
-    if (rand() % 2) {
+    auto shape = rand() % 3;
+    if (shape == 0) {
       obj->create_component<SimpleShape<sf::RectangleShape>>(
           sf::Color::Blue, sf::Vector2f{70, 70});
       obj->create_component<BoxCollider>(70);
-    } else {
+    } else if (shape == 1) {
       auto random_radius = rand() % 110 + 10;
       obj->create_component<SimpleShape<sf::CircleShape>>(sf::Color::Red,
                                                           random_radius);
       obj->create_component<BoxCollider>(random_radius * 2);
+    } else {
+      if (rand() % 2) {
+        obj->create_component<SpriteShape<sf::CircleShape>>(
+            "resources/image.bmp", 100);
+        obj->create_component<BoxCollider>(200);
+        obj->transform.position = {200, 200};
+      } else {
+        obj->create_component<SimpleShape<sf::RectangleShape>>(
+            sf::Color::Green, sf::Vector2f{70, 70});
+        obj->create_component<BoxCollider>(70);
+      }
     }
 
     auto screen_size = engine::get_screen_size();
     obj->transform.position =
         sf::Vector2f(screen_size.x / 2.0, screen_size.y / 2.0);
   }
-
-  auto shrek = engine::create_object<MovableObject>(sf::Vector2f{-20, 22}, 20);
-  shrek->create_component<SpriteShape<sf::CircleShape>>("resources/image.bmp",
-                                                        100);
-  shrek->create_component<BoxCollider>(200);
-  shrek->transform.position = {200, 200};
 
   engine.run();
 }
